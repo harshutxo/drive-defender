@@ -10,6 +10,10 @@ LOG_FILE = APP_DIR / "drive_defender.log"
 
 # Auto-updated signatures (extensions/filenames) are cached here.
 SIGNATURES_CACHE = APP_DIR / "signatures.json"
+
+# User-maintained additions, merged on top of the auto-updated signatures.
+# Same schema as signatures.json: {"extensions": [...], "filenames": [...]}
+CUSTOM_SIGNATURES = APP_DIR / "custom_signatures.json"
 SIGNATURE_REMOTE_URL = (
     "https://raw.githubusercontent.com/harshutxo/drive-defender/main/"
     "drive_defender/data/signatures.json"

@@ -37,16 +37,20 @@ def _read_local(path) -> Signatures | None:
 
 
 def load_signatures() -> Signatures:
-    """Load signatures from the auto-update cache, falling back to the bundled defaults."""
-    cached = _read_local(config.SIGNATURES_CACHE)
-    if cached is not None:
-        return cached
+    """Load signatures from the auto-update cache (falling back to bundled defaults),
+    then merge in any user-defined additions from CUSTOM_SIGNATURES."""
+    base = _read_local(config.SIGNATURES_CACHE) or _read_local(config.BUNDLED_SIGNATURES)
+    if base is None:
+        raise RuntimeError("No signature data available (cache and bundled defaults both missing/invalid)")
 
-    bundled = _read_local(config.BUNDLED_SIGNATURES)
-    if bundled is not None:
-        return bundled
+    custom = _read_local(config.CUSTOM_SIGNATURES)
+    if custom is None:
+        return base
 
-    raise RuntimeError("No signature data available (cache and bundled defaults both missing/invalid)")
+    return Signatures(
+        extensions=base.extensions | custom.extensions,
+        filenames=base.filenames | custom.filenames,
+    )
 
 
 def _cache_age_hours() -> float:

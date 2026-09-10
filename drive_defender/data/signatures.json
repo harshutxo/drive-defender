@@ -1,0 +1,9 @@
+{
+  "extensions": [
+    ".exe", ".scr", ".bat", ".cmd", ".vbs", ".vbe", ".js", ".jse",
+    ".ps1", ".psm1", ".msi", ".dll", ".lnk", ".hta", ".jar"
+  ],
+  "filenames": [
+    "autorun.inf", "desktop.ini.exe"
+  ]
+}

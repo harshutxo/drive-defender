@@ -1,15 +1,17 @@
 from pathlib import Path
 
-# Extensions treated as suspicious when they appear as new or modified files.
-SUSPICIOUS_EXTENSIONS = {
-    ".exe", ".scr", ".bat", ".cmd", ".vbs", ".vbe", ".js", ".jse",
-    ".ps1", ".psm1", ".msi", ".dll", ".lnk", ".hta", ".jar",
-}
-
-# Filenames that are classic autorun/malware droppers.
-SUSPICIOUS_FILENAMES = {"autorun.inf", "desktop.ini.exe"}
+PACKAGE_DIR = Path(__file__).resolve().parent
+BUNDLED_SIGNATURES = PACKAGE_DIR / "data" / "signatures.json"
 
 DEFAULT_DRIVE = "D:\\"
 APP_DIR = Path.home() / ".drive_defender"
 QUARANTINE_DIR = APP_DIR / "quarantine"
 LOG_FILE = APP_DIR / "drive_defender.log"
+
+# Auto-updated signatures (extensions/filenames) are cached here.
+SIGNATURES_CACHE = APP_DIR / "signatures.json"
+SIGNATURE_REMOTE_URL = (
+    "https://raw.githubusercontent.com/harshutxo/drive-defender/main/"
+    "drive_defender/data/signatures.json"
+)
+SIGNATURE_UPDATE_INTERVAL_HOURS = 24
